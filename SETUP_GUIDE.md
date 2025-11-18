@@ -343,7 +343,7 @@ vsce publish
 
 ## 🆘 Getting Help
 
-- **GitHub Issues**: https://github.com/yourusername/security-copilot/issues
+- **GitHub Issues**: https://github.com/inboxBodyguard/codeguard-copilot/issues
 - **Documentation**: See README.md
 - **VS Code Extension Docs**: https://code.visualstudio.com/api
 
