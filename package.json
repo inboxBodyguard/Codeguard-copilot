@@ -1,0 +1,159 @@
+{
+“name”: “security-copilot”,
+“displayName”: “AI Security Co-pilot”,
+“description”: “Real-time security vulnerability detection with AI-powered explanations - catches vulnerabilities as you code”,
+“version”: “0.1.0”,
+“publisher”: “your-publisher-name”,
+“author”: {
+“name”: “Your Name”,
+“email”: “your.email@example.com”
+},
+“license”: “MIT”,
+“repository”: {
+“type”: “git”,
+“url”: “https://github.com/yourusername/security-copilot”
+},
+“icon”: “icon.png”,
+“engines”: {
+“vscode”: “^1.80.0”
+},
+“categories”: [
+“Linters”,
+“Programming Languages”,
+“Other”
+],
+“keywords”: [
+“security”,
+“vulnerability”,
+“scanner”,
+“AI”,
+“code-analysis”,
+“sql-injection”,
+“xss”,
+“security-scanner”
+],
+“activationEvents”: [
+“onStartupFinished”
+],
+“main”: “./out/extension.js”,
+“contributes”: {
+“commands”: [
+{
+“command”: “securityCopilot.scanFile”,
+“title”: “Security Co-pilot: Scan Current File”,
+“icon”: “$(shield)”
+},
+{
+“command”: “securityCopilot.scanWorkspace”,
+“title”: “Security Co-pilot: Scan Entire Workspace”
+},
+{
+“command”: “securityCopilot.explainVulnerability”,
+“title”: “Security Co-pilot: Explain This Vulnerability”
+}
+],
+“keybindings”: [
+{
+“command”: “securityCopilot.scanFile”,
+“key”: “ctrl+shift+s”,
+“mac”: “cmd+shift+s”,
+“when”: “editorTextFocus”
+}
+],
+“menus”: {
+“editor/context”: [
+{
+“command”: “securityCopilot.scanFile”,
+“group”: “navigation”,
+“when”: “editorTextFocus”
+}
+]
+},
+“configuration”: {
+“title”: “Security Co-pilot”,
+“properties”: {
+“securityCopilot.enableRealtime”: {
+“type”: “boolean”,
+“default”: true,
+“description”: “Enable real-time scanning as you type”
+},
+“securityCopilot.scanDelay”: {
+“type”: “number”,
+“default”: 500,
+“description”: “Delay in milliseconds before scanning after typing stops”
+},
+“securityCopilot.aiProvider”: {
+“type”: “string”,
+“enum”: [
+“anthropic”,
+“groq”,
+“openai”
+],
+“default”: “anthropic”,
+“description”: “AI provider for deep security analysis”
+},
+“securityCopilot.apiKey”: {
+“type”: “string”,
+“default”: “”,
+“description”: “API key for AI provider (recommended: store in workspace settings, not in git)”
+},
+“securityCopilot.enableAI”: {
+“type”: “boolean”,
+“default”: true,
+“description”: “Enable AI-powered deep analysis (requires API key)”
+},
+“securityCopilot.severityFilter”: {
+“type”: “array”,
+“items”: {
+“type”: “string”,
+“enum”: [
+“critical”,
+“high”,
+“medium”,
+“low”
+]
+},
+“default”: [
+“critical”,
+“high”,
+“medium”,
+“low”
+],
+“description”: “Which severity levels to show”
+}
+}
+},
+“colors”: [
+{
+“id”: “securityCopilot.criticalHighlight”,
+“description”: “Background color for critical vulnerabilities”,
+“defaults”: {
+“dark”: “#ff000033”,
+“light”: “#ff000022”,
+“highContrast”: “#ff000044”
+}
+}
+]
+},
+“scripts”: {
+“vscode:prepublish”: “npm run compile”,
+“compile”: “tsc -p ./”,
+“watch”: “tsc -watch -p ./”,
+“pretest”: “npm run compile && npm run lint”,
+“lint”: “eslint src –ext ts”,
+“test”: “node ./out/test/runTest.js”,
+“package”: “vsce package”,
+“publish”: “vsce publish”
+},
+“devDependencies”: {
+“@types/node”: “^20.10.0”,
+“@types/vscode”: “^1.80.0”,
+“@typescript-eslint/eslint-plugin”: “^6.15.0”,
+“@typescript-eslint/parser”: “^6.15.0”,
+“@vscode/test-electron”: “^2.3.8”,
+“@vscode/vsce”: “^2.22.0”,
+“eslint”: “^8.56.0”,
+“typescript”: “^5.3.3”
+},
+“dependencies”: {}
+}
