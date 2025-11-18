@@ -11,11 +11,11 @@ Before you start, make sure you have:
 
 Check your versions:
 
-    bash
+```bash
 node --version   # Should be v18.0.0 or higher
 npm --version    # Should be 9.0.0 or higher
 code --version   # Should be 1.80.0 or higher
-
+```
 
 -----
 
@@ -23,7 +23,7 @@ code --version   # Should be 1.80.0 or higher
 
 Create your project with this exact structure:
 
-
+```
 security-copilot/
 ├── src/
 │   ├── extension.ts
@@ -44,11 +44,11 @@ security-copilot/
 
 ### Create the directories:
 
-    bash
+```bash
 mkdir security-copilot
 cd security-copilot
 mkdir -p src/patterns src/ai src/ui
-
+```
 
 -----
 
@@ -70,7 +70,7 @@ mkdir -p src/patterns src/ai src/ui
 
 ### 2. Create `.gitignore`:
 
-    bash
+```bash
 cat > .gitignore << 'EOF'
 node_modules/
 out/
@@ -80,11 +80,11 @@ out/
 *.log
 .DS_Store
 EOF
-
+```
 
 ### 3. Create `.vscodeignore`:
 
-    bash
+```bash
 cat > .vscodeignore << 'EOF'
 .vscode/**
 .vscode-test/**
@@ -103,9 +103,9 @@ EOF
 
 ## 📦 Step 3: Install Dependencies
 
-    bash
+```bash
 npm install
-
+```
 
 This installs:
 
@@ -129,13 +129,13 @@ You have **3 options** for storing your API key:
 
 ### Option B: Environment Variable
 
-    bash
+```bash
 # Linux/Mac - add to ~/.bashrc or ~/.zshrc
 export ANTHROPIC_API_KEY="your-key-here"
 
 # Windows - add to System Environment Variables
 setx ANTHROPIC_API_KEY "your-key-here"
-
+```
 
 ### Option C: User Settings (Global)
 
@@ -149,13 +149,13 @@ setx ANTHROPIC_API_KEY "your-key-here"
 
 ## 🔨 Step 5: Build the Extension
 
-    bash
+```bash
 # Compile TypeScript to JavaScript
 npm run compile
 
 # Or watch mode (auto-recompile on save)
 npm run watch
-
+```
 
 This creates the `out/` directory with compiled JavaScript.
 
@@ -170,25 +170,25 @@ This creates the `out/` directory with compiled JavaScript.
 1. A new **Extension Development Host** window opens
 1. Create a test file to scan:
 
-    javascript
+```javascript
 // test.js - Create this in the Extension Development Host
 const userInput = req.query.search;
 const query = "SELECT * FROM users WHERE name = '" + userInput + "'";
 db.execute(query);
-
+```
 
 1. You should see red squiggles and warnings!
 
 ### Method 2: Install Locally
 
-    bash
+```bash
 # Package the extension
 npm run package
 
 # This creates security-copilot-0.1.0.vsix
 # Install it in VS Code:
 code --install-extension security-copilot-0.1.0.vsix
-
+```
 
 -----
 
@@ -198,7 +198,7 @@ Create a test file with known vulnerabilities:
 
 ### test-vulnerabilities.py
 
-python
+```python
 import os
 
 # Should trigger: Hardcoded Secret
@@ -215,7 +215,7 @@ os.system("cat " + filename)
 # Should trigger: Weak Cryptography
 import hashlib
 password_hash = hashlib.md5(password.encode()).hexdigest()
-
+```
 
 ### Expected Results:
 
@@ -234,30 +234,31 @@ You should see:
 
 1. **demo-sql-injection.js**
 
-    javascript
+```javascript
 // Vulnerable code
 app.get('/search', (req, res) => {
   const search = req.query.q;
   const query = `SELECT * FROM products WHERE name = '${search}'`;
   db.execute(query);
 });
-
+```
 
 1. **demo-xss.js**
 
-    javascript
+```javascript
 // Vulnerable code
 function displayUserComment(comment) {
   document.getElementById('comments').innerHTML = comment;
 }
-
+```
 
 1. **demo-secrets.py**
 
-    python
+```python
 # Vulnerable code
 PASSWORD = "super_secret_password_123"
 API_KEY = "sk-1234567890abcdef"
+```
 
 ### Demo Script
 
@@ -295,12 +296,12 @@ API_KEY = "sk-1234567890abcdef"
 
 **Solution**:
 
-    bash
+```bash
 # Clean and rebuild
 rm -rf out node_modules
 npm install
 npm run compile
-
+```
 
 -----
 
@@ -316,7 +317,7 @@ npm run compile
 
 To publish to VS Code Marketplace:
 
-    bash
+```bash
 # 1. Create publisher account at https://marketplace.visualstudio.com/
 
 # 2. Get Personal Access Token from Azure DevOps
@@ -326,7 +327,7 @@ vsce login your-publisher-name
 
 # 4. Publish
 vsce publish
-
+```
 
 -----
 
@@ -342,7 +343,7 @@ vsce publish
 
 ## 🆘 Getting Help
 
-- **GitHub Issues**: https://github.com/inboxBodyguard/Codeguard-copilot/issues
+- **GitHub Issues**: https://github.com/yourusername/security-copilot/issues
 - **Documentation**: See README.md
 - **VS Code Extension Docs**: https://code.visualstudio.com/api
 
