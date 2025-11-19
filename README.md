@@ -79,7 +79,7 @@ Think of it as **“Grammarly for secure code”** - your personal security co-p
 1. **Clone the repository:**
 
 ```bash
-git clone https://github.com/yourusername/codeguard-copilot.git
+git clone https://github.com/inboxBodyguard/codeguard-copilot.git
 cd codeguard-copilot
 ```
 
