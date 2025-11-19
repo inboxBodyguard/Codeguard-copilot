@@ -161,141 +161,73 @@ export class SecurityQuickFixProvider implements vscode.CodeActionProvider {
 }
 
 // Register this command in extension.ts
-export function register
-export function registerExplainCommand(contextExplainCommand(context: vscode: vscode.Extension.ExtensionContext): void {
-Context): void {
-    const    const command = vsc command = vscode.commandode.commands.registerCommand(
-s.registerCommand(
-        '        'securityCopilot.explainVulnerability',
-        (securityCopilot.explainVulnerability',
-        (diagndiagnostic: vscodeostic: vscode.D.Diagnostic) => {
-           iagnostic) => {
-            const detailedInfo = diagnostic.relatedInformation const detailedInfo = diagnostic.relatedInformation??.[0].[0]?.message || 'No details?.message || 'No details available';
+export function registerExplainCommand(context: vscode.ExtensionContext): void {
+    const command = vscode.commands.registerCommand(
+        'securityCopilot.explainVulnerability',
+        (diagnostic: vscode.Diagnostic) => {
+            const detailedInfo = diagnostic.relatedInformation?.[0]?.message || 'No details available';
 
- available';
-
-                       // // Create a Create a webview panel webview panel to show detailed explanation
-            const panel = vsc to show detailed explanation
-            const panel = vscodeode.window.create.window.createWebviewPanel(
-                'securityWebviewPanel(
+            // Create a webview panel to show detailed explanation
+            const panel = vscode.window.createWebviewPanel(
                 'securityExplanation',
-Explanation',
-                `Security:                `Security: ${diagn ${diagnostic.message}`,
-ostic.message}`,
-                v                vscode.ViewColumn.Bscode.ViewColumn.Beseside,
-                { enableScriptide,
+                `Security: ${diagnostic.message}`,
+                vscode.ViewColumn.Beside,
                 { enableScripts: false }
             );
 
-s: false }
-            );
-
-            panel.webview.html =            panel.webview.html = getExplanationHTML(diagnostic getExplanationHTML(diagnostic.message,.message, detailedInfo);
-        detailedInfo);
+            panel.webview.html = getExplanationHTML(diagnostic.message, detailedInfo);
         }
     );
 
-    context.subscriptions }
-    );
-
-    context.subscriptions.push.push(command);
+    context.subscriptions.push(command);
 }
 
-function(command);
-}
-
-function getExplanation getExplanationHTML(title: string, explanationHTML(title: string, explanation: string): string {
-   : string): string {
-    // Convert explanation text to HTML // Convert explanation text to HTML with proper formatting
-    const sections with proper formatting
-    const = explanation.split sections = explanation.split('\n\n');
-    const htmlSections = sections.map('\n\n');
+function getExplanationHTML(title: string, explanation: string): string {
+    // Convert explanation text to HTML with proper formatting
+    const sections = explanation.split('\n\n');
     const htmlSections = sections.map(section => {
-        const lines = section.split('\n(section => {
         const lines = section.split('\n');
-        const header');
-        const header = lines = lines[0];
-       [0];
-        const content = const content = lines.slice( lines.slice(1).join1).join('\n');
+        const header = lines[0];
+        const content = lines.slice(1).join('\n');
 
-('\n');
-
-        if        if (header.includes('⚠ (header.includes('⚠️') ||️') || header.includes(' header.includes('🔧')🔧') || header.includes(' || header.includes('💡💡') || header.includes') || header.includes('('📚')) {
-           📚')) {
+        if (header.includes('⚠️') || header.includes('🔧') || header.includes('💡') || header.includes('📚')) {
             return `
-                <div class return `
                 <div class="section">
-                    <="section">
                     <h3>${header}</h3>
-h3>${header}</h3>
-                                       <pre>${content <pre>${content}</pre}</pre>
+                    <pre>${content}</pre>
                 </div>
-                </div>
-           >
             `;
         }
-        `;
-        }
-        return `< return `<p>${sectionp>${section}</p>}</p>`;
-    }).join`;
+        return `<p>${section}</p>`;
     }).join('');
 
-    return `<!('');
-
-    return `<!DOCTYPE htmlDOCTYPE html>
-<html lang=">
+    return `<!DOCTYPE html>
 <html lang="en">
-en">
 <head>
-   <head>
-    <meta <meta charset="UTF-8">
- charset="UTF-8">
-    <    <meta namemeta name="viewport" content="viewport" content="width=device-width,="width=device-width, initial-scale initial-scale=1=1.0">
-    <title>.0">
-    <title>Security Explanation</Security Explanation</title>
-   title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Explanation</title>
     <style>
- <style>
         body {
-                   body {
-            font-family font-family:: var(--vscode var(--vscode-font-family);
--font-family);
-            color: var(--            color: var(--vscode-foregroundvscode-foreground);
-            background-color);
-            background-color: var: var(--vscode(--vscode-editor-editor-background);
--background);
-            padding:            padding: 20px;
- 20px;
-            line            line-height: 1-height: 1.6;
-       .6;
-        }
+            font-family: var(--vscode-font-family);
+            color: var(--vscode-foreground);
+            background-color: var(--vscode-editor-background);
+            padding: 20px;
+            line-height: 1.6;
         }
         h2 {
-            h2 {
-            color: var color: var(--vsc(--vscode-textLinkode-textLink-foreground-foreground);
-            border-bottom);
-            border-bottom: : 2px solid var2px solid var(--vsc(--vscodeode-textLink-foreground);
--textLink-foreground);
-            padding-bottom: 10px;
+            color: var(--vscode-textLink-foreground);
+            border-bottom: 2px solid var(--vscode-textLink-foreground);
             padding-bottom: 10px;
         }
-        h        }
         h3 {
-           3 {
-            color: var color: var(--vscode(--vscode-textPre-textPreformat-foregroundformat-foreground);
-           );
-            margin-top:  margin-top: 20px;
-           20px;
+            color: var(--vscode-textPreformat-foreground);
+            margin-top: 20px;
             margin-bottom: 10px;
         }
-        margin-bottom: 10px;
-        }
         .section {
-            .section {
-            margin:  margin: 20px 20px 0;
-            padding0;
-            padding: : 15px;
-           15px;
+            margin: 20px 0;
+            padding: 15px;
             background-color: var(--vscode-textBlockQuote-background);
             border-left: 4px solid var(--vscode-textLink-foreground);
         }
@@ -303,38 +235,17 @@ en">
             background-color: var(--vscode-textCodeBlock-background);
             padding: 10px;
             border-radius: 4px;
-            overflow-x: background-color: var(--vscode-textBlockQuote-background);
-            border-left: 4px solid var(--vscode-textLink-foreground);
-        }
-        pre {
-            background-color: var(--vscode-textCodeBlock-background);
-            padding: 10px;
-            border-radius: 4px;
             overflow-x: auto;
-            auto;
-            font-family: font-family: var(--v var(--vscode-edscode-editor-font-family);
-itor-font-family);
-        }
+            font-family: var(--vscode-editor-font-family);
         }
         a {
-                   a {
-            color: color: var(--vsc var(--vscode-textode-textLink-foregroundLink-foreground);
+            color: var(--vscode-textLink-foreground);
         }
-);
-        }
-    </style    </style>
-</>
+    </style>
 </head>
-head>
 <body>
-    <h2<body>
-    <h2>${title>${title}</h2}</h2>
-    ${html>
-    ${htmlSectionsSections}
+    <h2>${title}</h2>
+    ${htmlSections}
 </body>
-}
-</body>
-</html>`;
-}
 </html>`;
 }
