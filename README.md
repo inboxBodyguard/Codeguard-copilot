@@ -364,7 +364,7 @@ Edit `src/patterns/vulnerabilityPatterns.ts` and add your pattern:
 
 ```bash
 # Clone and install
-git clone https://github.com/yourusername/codeguard-copilot.git
+git clone https://github.com/inboxBodyguard/codeguard-copilot.git
 cd codeguard-copilot
 npm install
 
