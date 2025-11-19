@@ -139,7 +139,7 @@ If no additional vulnerabilities found, return: []`;
         }
 
         const data = await response.json();
-        return data.content?.[0]?.text || '';
+        return (data as any).content?.[0]?.text || '';
     }
 
     private async callGroq(prompt: string): Promise<string> {
@@ -166,7 +166,7 @@ If no additional vulnerabilities found, return: []`;
         }
 
         const data = await response.json();
-        return data.choices?.[0]?.message?.content || '';
+        return (data as any).choices?.[0]?.message?.content || '';
     }
 
     private async callOpenAI(prompt: string): Promise<string> {
@@ -193,7 +193,7 @@ If no additional vulnerabilities found, return: []`;
         }
 
         const data = await response.json();
-        return data.choices?.[0]?.message?.content || '';
+        return (data as any).choices?.[0]?.message?.content || '';
     }
 
     private parseAIResponse(response: string, code: string): Vulnerability[] {

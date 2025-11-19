@@ -72,10 +72,8 @@ export function activate(context: vscode.ExtensionContext) {
 
         if (!enableRealtime) return;
 
-        // Debounce: wait for user to stop typing
-        if (scanTimeout) {
-            clearTimeout(scanTimeout);
-        }
+        // Debounce typing
+        if (scanTimeout) clearTimeout(scanTimeout);
 
         const delay = config.get<number>('scanDelay', 500);
         scanTimeout = setTimeout(async () => {
@@ -88,7 +86,7 @@ export function activate(context: vscode.ExtensionContext) {
         await scanDocument(document);
     });
 
-    // Register quick fix provider
+    // Register quick-fix provider
     const quickFixProvider = vscode.languages.registerCodeActionsProvider(
         { scheme: 'file' },
         new SecurityQuickFixProvider(aiEngine),
@@ -118,9 +116,12 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 async function scanDocument(document: vscode.TextDocument): Promise<void> {
-    // Only scan supported languages
+    console.log('🔍 Scanning document:', document.fileName, 'Language:', document.languageId);
+
+    // Supported languages
     const supportedLanguages = ['javascript', 'typescript', 'python', 'java', 'php'];
     if (!supportedLanguages.includes(document.languageId)) {
+        console.log('⏭️ Skipping unsupported language:', document.languageId);
         return;
     }
 
@@ -130,6 +131,8 @@ async function scanDocument(document: vscode.TextDocument): Promise<void> {
             document.languageId
         );
 
+        console.log(`✅ Found ${vulnerabilities.length} vulnerabilities`);
+
         const diagnostics = SecurityDiagnostics.createDiagnostics(
             document,
             vulnerabilities
@@ -137,7 +140,7 @@ async function scanDocument(document: vscode.TextDocument): Promise<void> {
 
         diagnosticCollection.set(document.uri, diagnostics);
     } catch (error) {
-        console.error('Scan failed:', error);
+        console.error('❌ Scan failed:', error);
     }
 }
 
