@@ -1,1 +1,0 @@
-{"version":3,"file":"quickFix.d.ts","sourceRoot":"","sources":["../../src/ui/quickFix.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,MAAM,MAAM,QAAQ,CAAC;AACjC,OAAO,EAAE,gBAAgB,EAAE,MAAM,gBAAgB,CAAC;AAElD,qBAAa,wBAAyB,YAAW,MAAM,CAAC,kBAAkB;IACtE,OAAO,CAAC,QAAQ,CAAmB;gBAEvB,QAAQ,EAAE,gBAAgB;IAItC,kBAAkB,IAAI,MAAM,CAAC,UAAU,EAAE;CAG5C"}
