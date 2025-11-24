@@ -241,7 +241,7 @@ Codeguard Copilot detects **20+ vulnerability types** across multiple categories
 
 ### Real-Time Vulnerability Detection
 
-![Security scanning in action](https://via.placeholder.com/800x400?text=Screenshot+Coming+Soon)
+![Security scanning in action](./screenshots/realtime-scanning.jpg)
 *Codeguard Copilot catches vulnerabilities as you type*
 
 ### Educational Explanations
